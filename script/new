@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+from os import path
+import os
+import re
+
+title = input("Title: ").strip()
+slug = re.sub(r"\s", "-", title)
+slug = re.sub(r"[^-\w]", '', slug).lower()
+slug = re.sub(r"-{2,}", "-", slug)
+print(title)
+
+tags = "tags:\n"
+print("Tags: ")
+while True:
+    tag = input("   ").strip()
+    if tag:
+        tags += "  - " + tag + "\n"
+    else:
+        break
+
+fn = slug + ".markdown"
+contents = '---\nlayout: post\ntitle: "%s"\n' % (title)
+contents += tags
+contents += "---\n\n"
+
+ofn = path.join(path.dirname(__file__), "..", "drafts", fn)
+post = open(ofn, "w")
+post.write(contents)
+post.close()
+
+# Open Draft in vim
+os.system("vim %s +%d" % (ofn, len(contents.splitlines())))
+
+# Ask for publishing the script
+publish_script = path.join(path.dirname(__file__), "publish")
+os.system(publish_script)
+

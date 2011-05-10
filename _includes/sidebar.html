@@ -1,0 +1,16 @@
+<div id="sidebar">
+  <h2 class="sidebar-title">Pages</h2>
+  <div class="static-body">
+    <ul>
+      <li><a title="About" href="/about.html">About</a></li>
+      <li><a href="https://github.com/lammermann">GitHub</a></li>
+    </ul>
+  </div>
+  <div id="tag_cloud" style="display:none;">
+    <h2 class="sidebar-title">Tags</h2>
+    <div class="static-body">
+      {% for post in site.posts %}{% for tag in post.tags %}<span class="tag">{{tag}}</span>
+      {% endfor %}{% endfor %}
+    </div>
+  </div>
+</div>

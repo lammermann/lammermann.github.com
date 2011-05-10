@@ -1,0 +1,7 @@
+pygments: true
+lsi: false
+#auto: true
+paginate: 10
+exclude:
+  - script
+  - README.md

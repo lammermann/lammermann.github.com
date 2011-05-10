@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+
+import os
+from os import path
+from datetime import datetime
+import re
+
+dirname = path.dirname(__file__)
+files = os.listdir(path.join(dirname, '../drafts/'))
+published_posts = []
+if not files:
+    print("No posts to publish")
+    exit(0)
+
+print("Select post to publish (just enter for no post):")
+for i, thisfile in enumerate(files):
+    print(i, path.basename(thisfile))
+print(i+1, "all")
+
+def do_publish(number):
+    date = datetime.strftime(datetime.now(), "%Y-%m-%d")
+    publish_name = '../_posts/' + date + '-' + path.basename(files[number])
+    publish_name = path.join(dirname, publish_name)
+    draft_name = '../drafts/' + path.basename(files[number])
+    draft_name = path.join(dirname, draft_name)
+    os.rename(draft_name, publish_name)
+    published_posts.append(files[number])
+    wants_to = input("Add to git index? [Y/n] ").strip()
+    if re.match(r"y(es)?", wants_to, re.IGNORECASE) or wants_to == "":
+        os.system("git add %s" % (publish_name))
+
+while True:
+    if len(published_posts) >= len(files):
+        break
+    number = input("Next Post: ").strip()
+    if number:
+        number = int(number)
+        if number < 0 or number > len(files):
+            break
+        elif number == len(files):
+            for i, thisfile in enumerate(files):
+                if thisfile not in published_posts:
+                    do_publish(i)
+            break
+        do_publish(number)
+    else:
+        break
+
+wants_to = input("Push to git? [Y/n] ").strip()
+if re.match(r"y(es)?", wants_to, re.IGNORECASE) or wants_to == "":
+    message = input("Git commit message: ").strip()
+    if not message:
+        os.system("git commit")
+    else:
+        os.system("git commit -m %s" % message)
+    push_repo = input("Git repository to push [origin master] ")
+    if push_repo:
+        os.system("git push %s" % (push_repo))
+    else:
+        os.system("git push origin master")
+
