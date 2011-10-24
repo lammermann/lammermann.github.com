@@ -14,17 +14,23 @@ auch wenn sie in der Ignore-Liste stehen.
 
 Mit dem Befehl
 
-    git update-index --assume-unchanged ${FILE} ...
+{% highlight sh %}
+$ git update-index --assume-unchanged ${FILE} ...
+{% endhighlight %}
 
 können die betreffenden Dateien und Ordner ignoriert werden. Dies hat ausserdem
 den Vorteil dass der
 
-    git status
+{% highlight sh %}
+$ git status
+{% endhighlight %}
 
 Befehl unwichtige Änderungen nicht anzeigt und man sich auf das konzentrieren
 kann was wichtig ist. Will man die Datei wieder aufnehmen so führt man den
 Befehl
 
-    git update-index --no-assume-unchanged ${FILE} ...
+{% highlight sh %}
+$ git update-index --no-assume-unchanged ${FILE} ...
+{% endhighlight %}
 
 aus um die Dateien nicht länger zu ignorieren.
