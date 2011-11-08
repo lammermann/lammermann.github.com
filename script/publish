@@ -52,7 +52,7 @@ if re.match(r"y(es)?", wants_to, re.IGNORECASE) or wants_to == "":
     if not message:
         os.system("git commit")
     else:
-        os.system("git commit -m %s" % message)
+        os.system("git commit -m '%s'" % message)
     push_repo = input("Git repository to push [origin master] ")
     if push_repo:
         os.system("git push %s" % (push_repo))
