@@ -2,20 +2,28 @@
 layout: default
 title: Tags
 ---
-<h1 id="tag_title"></h1>
-<div id="tag_loader">Loading articles ...</div>
-{% for post in site.posts %}
-<div class="tagged_article" style="display:none;">
-  <div style="display:none;">
-    {% assign post = page %}{% include tag_links.html %}
-  </div>
-  <div class="abbreviated_post">
-    <h2>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-    </h2>
-    <p class="auth">
-      [Posted by Benjamin Kober on {{ post.date | date_to_string }}]
-    </p>
-  </div>
+<div class='posts'>
+  {% for tag in site.tags %}
+    {% assign name  = tag[0] %}
+    {% assign posts = tag[1] %}
+    <div class="post">
+      <h2 id={{ name }} class='post-title'>
+          <a href='/tags.html#{{name}}'>{{ name }}</a>
+      </h2>
+      <div class='post-text'>
+      <ul>
+        {% for post in posts %}
+        <div class="abbreviated_post">
+          <li><h3>
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h3></li>
+          <p class="auth">
+            [Posted by Benjamin Kober on {{ post.date | date_to_string }}]
+          </p>
+        </div>
+        {% endfor %}
+      </ul>
+      </div>
+    </div>
+  {% endfor %}
 </div>
-{% endfor %}
